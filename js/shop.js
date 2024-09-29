@@ -84,7 +84,7 @@ function buy(id) {
     })
 
     if(cart.some(product => product == filteredProduct)) {
-        cart.quantity++;
+        cart.quantity++
     } else {
         filteredProduct.quantity = 1
         cart.push(filteredProduct)
@@ -99,6 +99,9 @@ function cleanCart() {
 // Exercise 3
 function calculateTotal() {
     // Calculate total price of the cart using the "cartList" array
+    cart.map(item => {
+        total += item.price
+    })
 }
 
 // Exercise 4
