@@ -78,25 +78,22 @@ var total = 0;
 function buy(id) {
     // 1. Loop for to the array products to get the item to add to cart
     // 2. Add found product to the cart array
+
     const filteredProduct = products.find((product) => {
         return product.id === id;
     })
 
     if(cart.some(product => product == filteredProduct)) {
-        alert(`${filteredProduct.name} ya está en tu carrito!`)
+        cart.quantity++;
     } else {
         filteredProduct.quantity = 1
         cart.push(filteredProduct)
-        console.log(cart)
     }
-
-    
-
 }
 
 // Exercise 2
 function cleanCart() {
-
+    cart = [];
 }
 
 // Exercise 3
