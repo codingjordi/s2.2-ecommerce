@@ -128,7 +128,36 @@ function applyPromotionsCart() {
 // Exercise 5
 function printCart() {
     // Fill the shopping cart modal manipulating the shopping cart dom
+    const tableBody = document.getElementById('cart_list')
+    const totalCartPrice = document.getElementById("total_price")
     
+    tableBody.innerHTML = ''
+    totalCartPrice.innerText = 0
+
+    cart.map((item) => {
+        const tableRow = document.createElement('tr')
+        
+        const tableCellName = document.createElement('td')
+        const tableCellPrice = document.createElement('td')
+        const tableCellQty = document.createElement('td')
+        const tableCellTotalPrice = document.createElement('td')
+
+        applyPromotionsCart()
+
+        tableCellName.innerText = item.name
+        tableCellPrice.innerText = item.price
+        tableCellQty.innerText = item.quantity
+        tableCellTotalPrice.innerText = item.subtotalWithDiscount ? 
+                                        (item.subtotalWithDiscount * item.quantity).toFixed(2) : 
+                                        (item.quantity * item.price).toFixed(2)
+        totalCartPrice.innerText = (parseFloat(totalCartPrice.innerText) + parseFloat(tableCellTotalPrice.innerText)).toFixed(2)
+        
+        tableBody.appendChild(tableRow)
+        tableRow.appendChild(tableCellName)
+        tableRow.appendChild(tableCellPrice)
+        tableRow.appendChild(tableCellQty)
+        tableRow.appendChild(tableCellTotalPrice)
+    })
 }
 
 
