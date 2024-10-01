@@ -78,17 +78,23 @@ var total = 0;
 function buy(id) {
     // 1. Loop for to the array products to get the item to add to cart
     // 2. Add found product to the cart array
+    const cartCounter = document.getElementById('count_product')
 
-    const filteredProduct = products.find((product) => {
+    const desiredProduct = products.find((product) => {
         return product.id === id;
     })
 
-    if(cart.some(product => product == filteredProduct)) {
-        cart.quantity++
+    if(cart.some(product => product == desiredProduct)) {
+        desiredProduct.quantity++;
+        alert(`${desiredProduct.quantity} ${desiredProduct.name}`)
     } else {
-        filteredProduct.quantity = 1
-        cart.push(filteredProduct)
+        desiredProduct.quantity = 1
+        cart.push(desiredProduct)
+        alert(`Nuevo producto añadido!`)
     }
+    
+    cartCounter.innerText = parseInt(cartCounter.innerText) + 1 
+    
 }
 
 // Exercise 2
@@ -107,11 +113,22 @@ function calculateTotal() {
 // Exercise 4
 function applyPromotionsCart() {
     // Apply promotions to each item in the array "cart"
+    cart.map(item => {
+        if(item.name == 'cooking oil' && item.quantity >= 3) {
+            item.subtotalWithDiscount = (item.price) - (item.price * 0.2)
+            console.log(item.subtotalWithDiscount)
+        } else if (item.name == 'Instant cupcake mixture' && item.quantity >= 10){
+            item.subtotalWithDiscount = (item.price) - (item.price * 0.3)
+            console.log(item.price)
+        }
+    })
+
 }
 
 // Exercise 5
 function printCart() {
     // Fill the shopping cart modal manipulating the shopping cart dom
+    
 }
 
 
