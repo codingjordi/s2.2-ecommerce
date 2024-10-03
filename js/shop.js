@@ -165,6 +165,13 @@ function printCart() {
 
 // Exercise 7
 function removeFromCart(id) {
+    // 1. Loop for to the array products to get the item to add to cart
+    // 2. Remove the item from the array of cart
+    cart = cart.filter(item => item.id !== id)
+
+    const cartCounter = document.getElementById('count_product')
+    
+    cartCounter.innerText = item.parseInt(cartCounter.innerText) - 1 
 
 }
 
