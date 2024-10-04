@@ -141,6 +141,11 @@ function printCart() {
         const tableCellPrice = document.createElement('td')
         const tableCellQty = document.createElement('td')
         const tableCellTotalPrice = document.createElement('td')
+        const deleteItemButton = document.createElement('button')
+
+        deleteItemButton.onclick = function() {
+            removeFromCart(item.id);
+        }
 
         applyPromotionsCart()
 
@@ -157,6 +162,7 @@ function printCart() {
         tableRow.appendChild(tableCellPrice)
         tableRow.appendChild(tableCellQty)
         tableRow.appendChild(tableCellTotalPrice)
+        tableRow.appendChild(deleteItemButton)
     })
 }
 
@@ -165,15 +171,29 @@ function printCart() {
 
 // Exercise 7
 function removeFromCart(id) {
-    // 1. Loop for to the array products to get the item to add to cart
-    // 2. Remove the item from the array of cart
-    cart = cart.filter(item => item.id !== id)
 
-    const cartCounter = document.getElementById('count_product')
+    console.log('Cart before:', cart);
+
+    cart = cart
+        .map(product => {
+            if (product.id === id) {
+                console.log(`Reducing quantity for product ${product.name}`);
+                return { ...product, quantity: product.quantity - 1 };
+            }
+            return product;
+        })
+        .filter(product => product.id !== id || product.quantity > 0);
+
+    console.log('Cart after:', cart);
+
+    printCart();
+
+    const cartCounter = document.getElementById('count_product');
+    cartCounter.innerText = cartCounter.innerText == 0 ? 0 : parseInt(cartCounter.innerText) - 1;
     
-    cartCounter.innerText = item.parseInt(cartCounter.innerText) - 1 
-
 }
+
+
 
 function open_modal() {
     printCart();
