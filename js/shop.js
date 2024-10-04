@@ -172,8 +172,6 @@ function printCart() {
 // Exercise 7
 function removeFromCart(id) {
 
-    console.log('Cart before:', cart);
-
     cart = cart
         .map(product => {
             if (product.id === id) {
@@ -184,13 +182,11 @@ function removeFromCart(id) {
         })
         .filter(product => product.id !== id || product.quantity > 0);
 
-    console.log('Cart after:', cart);
-
     printCart();
 
     const cartCounter = document.getElementById('count_product');
     cartCounter.innerText = cartCounter.innerText == 0 ? 0 : parseInt(cartCounter.innerText) - 1;
-    
+
 }
 
 
