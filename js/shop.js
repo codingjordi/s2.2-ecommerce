@@ -71,7 +71,6 @@ var products = [
 
 // Improved version of cartList. Cart is an array of products (objects), but each one has a quantity field to define its quantity, so these products are not repeated.
 var cart = [];
-
 var total = 0;
 
 // Exercise 1
@@ -86,11 +85,11 @@ function buy(id) {
 
     if(cart.some(product => product == desiredProduct)) {
         desiredProduct.quantity++;
-        alert(`${desiredProduct.quantity} ${desiredProduct.name}`)
+        console.log(`${desiredProduct.quantity} ${desiredProduct.name}`)
     } else {
         desiredProduct.quantity = 1
         cart.push(desiredProduct)
-        alert(`Nuevo producto añadido!`)
+        console.log(`Nuevo producto añadido!`)
     }
     
     cartCounter.innerText = parseInt(cartCounter.innerText) + 1 
@@ -100,6 +99,12 @@ function buy(id) {
 // Exercise 2
 function cleanCart() {
     cart = [];
+
+    printCart();
+ 
+    const cartCounter = document.getElementById('count_product')
+    cartCounter.innerText = 0
+
 }
 
 // Exercise 3
@@ -115,78 +120,80 @@ function applyPromotionsCart() {
     // Apply promotions to each item in the array "cart"
     cart.map(item => {
         if(item.name == 'cooking oil' && item.quantity >= 3) {
-            item.subtotalWithDiscount = (item.price) - (item.price * 0.2)
-            console.log(item.subtotalWithDiscount)
-        } else if (item.name == 'Instant cupcake mixture' && item.quantity >= 10){
-            item.subtotalWithDiscount = (item.price) - (item.price * 0.3)
-            console.log(item.price)
+            item.subtotalWithDiscount = (item.price) - (item.price * 0.2);
+        } else if(item.name == 'Instant cupcake mixture' && item.quantity >= 10) {
+            item.subtotalWithDiscount = (item.price) - (item.price * 0.3);
+        } else {
+            delete item.subtotalWithDiscount;
         }
-    })
+    });
+    
 
 }
 
 // Exercise 5
 function printCart() {
-    // Fill the shopping cart modal manipulating the shopping cart dom
-    const tableBody = document.getElementById('cart_list')
-    const totalCartPrice = document.getElementById("total_price")
+    console.log('Contenido del carrito:', cart);
+    const tableBody = document.getElementById('cart_list');
+    const totalCartPrice = document.getElementById("total_price");
     
-    tableBody.innerHTML = ''
-    totalCartPrice.innerText = 0
+    tableBody.innerHTML = '';
+    totalCartPrice.innerText = 0;
+
 
     cart.map((item) => {
-        const tableRow = document.createElement('tr')
-        
-        const tableCellName = document.createElement('td')
-        const tableCellPrice = document.createElement('td')
-        const tableCellQty = document.createElement('td')
-        const tableCellTotalPrice = document.createElement('td')
-        const deleteItemButton = document.createElement('button')
+        const tableRow = document.createElement('tr');
+        const tableCellName = document.createElement('td');
+        const tableCellPrice = document.createElement('td');
+        const tableCellQty = document.createElement('td');
+        const tableCellTotalPrice = document.createElement('td');
+        const tableCellDeleteButton = document.createElement('td');
+        const deleteItemButton = document.createElement('button');
 
+        deleteItemButton.innerHTML = 'Eliminar';
         deleteItemButton.onclick = function() {
             removeFromCart(item.id);
-        }
+        };
 
-        applyPromotionsCart()
+        applyPromotionsCart();
 
-        tableCellName.innerText = item.name
-        tableCellPrice.innerText = item.price
-        tableCellQty.innerText = item.quantity
+        tableCellName.innerText = item.name;
+        tableCellPrice.innerText = item.price;
+        tableCellQty.innerText = item.quantity;
         tableCellTotalPrice.innerText = item.subtotalWithDiscount ? 
                                         (item.subtotalWithDiscount * item.quantity).toFixed(2) : 
-                                        (item.quantity * item.price).toFixed(2)
-        totalCartPrice.innerText = (parseFloat(totalCartPrice.innerText) + parseFloat(tableCellTotalPrice.innerText)).toFixed(2)
+                                        (item.quantity * item.price).toFixed(2);
+        totalCartPrice.innerText = (parseFloat(totalCartPrice.innerText) + parseFloat(tableCellTotalPrice.innerText)).toFixed(2);
         
-        tableBody.appendChild(tableRow)
-        tableRow.appendChild(tableCellName)
-        tableRow.appendChild(tableCellPrice)
-        tableRow.appendChild(tableCellQty)
-        tableRow.appendChild(tableCellTotalPrice)
-        tableRow.appendChild(deleteItemButton)
-    })
+        tableCellDeleteButton.appendChild(deleteItemButton);
+        tableRow.appendChild(tableCellName);
+        tableRow.appendChild(tableCellPrice);
+        tableRow.appendChild(tableCellQty);
+        tableRow.appendChild(tableCellTotalPrice);
+        tableRow.appendChild(tableCellDeleteButton);
+        tableBody.appendChild(tableRow);
+    });
 }
-
 
 // ** Nivell II **
 
 // Exercise 7
 function removeFromCart(id) {
-
     cart = cart
         .map(product => {
             if (product.id === id) {
                 console.log(`Reducing quantity for product ${product.name}`);
-                return { ...product, quantity: product.quantity - 1 };
+                return {...product, quantity: product.quantity - 1};
             }
             return product;
         })
-        .filter(product => product.id !== id || product.quantity > 0);
-
+        .filter(product => product.quantity > 0);
+    
     printCart();
 
     const cartCounter = document.getElementById('count_product');
-    cartCounter.innerText = cartCounter.innerText == 0 ? 0 : parseInt(cartCounter.innerText) - 1;
 
+    cartCounter.innerText = cartCounter.innerText == 0 ? 0 : parseInt(cartCounter.innerText) - 1;
 }
 
 

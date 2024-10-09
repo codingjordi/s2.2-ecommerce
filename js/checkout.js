@@ -21,7 +21,7 @@ function validate() {
     // Validar campo nombre
     if (fName.value.trim() === "" || fName.value.length < 3 || !/^[A-Za-z]+$/.test(fName.value)) {
         error++;
-        fName.classList.add("is-invalid");
+        fName.classList.add("is-invalid");  
     }
 
     // Validar campo email
@@ -49,14 +49,14 @@ function validate() {
     }
 
     // Validar campo numerod e telefono
-    if (fPhone.value.trim() === "" || !/^\d+$/.test(fPhone.value)) {
+    if (fPhone.value.trim() === "" || fPhone.value.length < 9 || !/^\d+$/.test(fPhone.value)) {
         error++;
         fPhone.classList.add("is-invalid");
     }
 
     // Mostrar results
     if (error > 0) {
-        alert("Hay " + error + (error = 1 ? " error en el formulario" : " errores en el formulario"));
+        console.log("Hay " + error + (error = 1 ? " error en el formulario" : " errores en el formulario"));
     } else {
         alert("Formulario validado correctamente ✨🐬🍦🌈");
     }
